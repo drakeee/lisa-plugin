@@ -1,5 +1,3 @@
-#define SAMPGDK_AMALGAMATION
-
 //Define plugin details
 #define PLUGIN_NAME "Lua plugin"
 #define PLUGIN_AUTHOR "drake"

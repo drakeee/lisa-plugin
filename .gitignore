@@ -7,7 +7,6 @@ build/
 # Ignore CMake files
 CMakeCache.txt
 CMakeFiles/
-CMakeLists.txt
 CPackConfig.cmake
 CPackSourceConfig.cmake
 CTestTestfile.cmake

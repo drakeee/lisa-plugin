@@ -1,6 +1,8 @@
 [submodule "vendor/sampgdk"]
 	path = vendor/sampgdk
 	url = https://github.com/Zeex/sampgdk
+	ignore = dirty
 [submodule "vendor/samp-plugin-sdk"]
 	path = vendor/samp-plugin-sdk
 	url = https://github.com/maddinat0r/samp-plugin-sdk.git
+	ignore = dirty

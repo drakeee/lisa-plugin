@@ -6,3 +6,6 @@
 	path = vendor/samp-plugin-sdk
 	url = https://github.com/maddinat0r/samp-plugin-sdk.git
 	ignore = dirty
+[submodule "vendor/cmake-modules"]
+	path = vendor/cmake-modules
+	url = https://github.com/Zeex/cmake-modules

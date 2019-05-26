@@ -5,6 +5,8 @@ set(PLUGIN_VERSION "0.0.1")
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/vendor/cmake-modules")
 
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/release)
+
 include_directories(
 	${PROJECT_SOURCE_DIR}/include/lua535
 	${PROJECT_SOURCE_DIR}/include/sampsdk

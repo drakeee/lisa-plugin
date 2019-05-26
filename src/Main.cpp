@@ -15,6 +15,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL Load(void **ppData)
 	sampgdk::logprintf("\tPlugin name: %s", PLUGIN_NAME);
 	sampgdk::logprintf("\tPlugin version: %s", PLUGIN_VERSION);
 	sampgdk::logprintf("\tPlugin author: %s", PLUGIN_AUTHOR);
+
 	return sampgdk::Load(ppData);
 }
 

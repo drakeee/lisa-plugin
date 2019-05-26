@@ -12,3 +12,6 @@
 
 //SAMPGDK
 #include <sampgdk.h>
+
+//Lua
+#include <lua.hpp>

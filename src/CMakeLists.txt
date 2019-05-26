@@ -12,4 +12,8 @@ add_samp_plugin(samp-lua-plugin
 	${SAMPSDK_DIR}/amx/getch.c
 	${SAMPGDK_INCLUDE_DIR}/sampgdk.c
 	Main.cpp
+	CModeInit.cpp
+	Main.def
 )
+
+target_link_libraries(samp-lua-plugin ${PROJECT_SOURCE_DIR}/lib/lua535/liblua.a)

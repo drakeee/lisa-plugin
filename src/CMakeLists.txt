@@ -11,8 +11,18 @@ add_samp_plugin(samp-lua-plugin
 	${SAMPSDK_DIR}/amxplugin2.cpp
 	${SAMPSDK_DIR}/amx/getch.c
 	${SAMPGDK_INCLUDE_DIR}/sampgdk.c
-	Main.cpp
+	CActor.cpp
+	CEntity.cpp
+	CEntityData.cpp
+	CLuaDefs.cpp
+	CLuaFunctionDefs.cpp
+	CObject.cpp
+	CPlayer.cpp
+	CVehicle.cpp
 	CModeInit.cpp
+	CSAMP.cpp
+	Shared.cpp
+	Main.cpp
 	Main.def
 )
 

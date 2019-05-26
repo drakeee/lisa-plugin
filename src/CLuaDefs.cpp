@@ -1,8 +1,5 @@
-#include "LuaDefs.h"
-#include "CLuaFunctionDefs.h"
-
-#include <sampgdk.h>
-#include <cassert>
+#include "Main.h"
+//#include "CLuaFunctionDefs.h"
 
 void lua_stacktrace(lua_State* L, const char* stackName)
 {
@@ -87,6 +84,11 @@ void lua_inserttable(lua_State *L, int idx, const char* key, const char* value)
 	sampgdk::logprintf("Here lies table");
 }
 
+/**
+ * @brief 
+ * 
+ * @param L - Lua state
+ */
 void lua_initclass(lua_State *L)
 {
 	lua_newtable(L);

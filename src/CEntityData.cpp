@@ -1,12 +1,7 @@
-#include "CEntityData.h"
-
-#ifdef SAMPGDK_AMALGAMATION
-	#include <sampgdk.h>
-#else
-	#include <sampgdk/core.h>
-#endif
+#include "Main.h"
 
 #include <string>
+#include <cstring>
 
 CEntityData::CEntityData()
 {
@@ -20,7 +15,7 @@ CEntityData::CEntityData(const char *value)
 	this->dataType = EntityDataType::DATA_STRING;
 
 	this->dataString = std::unique_ptr<char[]>(new char[strlen(value) + 1]);
-	strcpy_s(this->dataString.get(), strlen(value) + 1, value);
+	strcpy(this->dataString.get(), value);
 }
 
 CEntityData::CEntityData(std::string value)

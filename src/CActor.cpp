@@ -1,5 +1,4 @@
-#include "CActor.h"
-#include "CSAMP.h"
+#include "Main.h"
 
 CActor::CActor(int modelid, float x, float y, float z, float rotation)
 {

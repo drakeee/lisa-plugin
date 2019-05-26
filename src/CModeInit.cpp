@@ -9,6 +9,8 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 
 	//Import default libraries into the vm
 	luaL_openlibs(L);
+	lua_initclass(L);
+	
 
 	//Try to load file for testing purposes
 	if(luaL_dofile(L, "./scripts/test.lua"))

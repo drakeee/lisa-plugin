@@ -1,13 +1,4 @@
-#include "CSAMP.h"
-
-#include <memory>
-
-#ifdef SAMPGDK_AMALGAMATION
-	#include <sampgdk.h>
-#else
-	#include <sampgdk/core.h>
-	#include <sampgdk/a_samp.h>
-#endif
+#include "Main.h"
 
 CPlayer::CPlayer(int playerid)
 	: playerid(playerid)
@@ -42,7 +33,7 @@ bool CPlayer::sendMessage(int color, const char* message, ...)
 	char szMessage[144 + 1];
 	va_list testList;
 	va_start(testList, message);
-	vsprintf_s(szMessage, message, testList);
+	vsprintf(szMessage, message, testList);
 	va_end(testList);
 
 	return SendClientMessage(this->playerid, color, szMessage);

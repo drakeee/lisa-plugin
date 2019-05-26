@@ -1,7 +1,6 @@
 #ifndef _LUA_DEFINITIONS_H
 #define _LUA_DEFINITIONS_H
 
-#include <lua.hpp>
 #include <string>
 #include <utility>
 

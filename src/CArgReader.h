@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LuaDefs.h"
+#include "Main.h"
 
 #include <vector>
 
@@ -110,7 +110,7 @@ public:
 
 		int argType = lua_type(m_luaVM, m_stackIndex);
 		//sprintf_s(buffer, "Bad Argument (%s) Expected argument at index %d: '%s', got '%s' instead.", lua_tostring(m_luaVM, lua_upvalueindex(1)), m_stackIndex, expectedType, lua_typename(m_luaVM, argType));
-		sprintf_s(buffer, "Bad Argument (%s:%d) Expected argument at index %d: '%s', got '%s' instead.", debugInfo.name, debugInfo.currentline, m_stackIndex, expectedType, lua_typename(m_luaVM, argType));
+		sprintf(buffer, "Bad Argument (%s:%d) Expected argument at index %d: '%s', got '%s' instead.", debugInfo.name, debugInfo.currentline, m_stackIndex, expectedType, lua_typename(m_luaVM, argType));
 		//sampgdk::logprintf("Bad Argument (%s:%d) Expected argument at index %d: '%s', got '%s' instead.", debugInfo.name, debugInfo.currentline, m_stackIndex, expectedType, lua_typename(m_luaVM, argType));
 
 		AddMessage(buffer);

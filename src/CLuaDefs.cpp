@@ -1,6 +1,12 @@
 #include "Main.h"
 //#include "CLuaFunctionDefs.h"
 
+/**
+ * @brief Print the exact state of stack
+ * 
+ * @param L - Lua state
+ * @param stackName - Name the trace for easily readability
+ */
 void lua_stacktrace(lua_State* L, const char* stackName)
 {
 	int stackTop = lua_gettop(L);
@@ -43,6 +49,13 @@ void lua_stacktrace(lua_State* L, const char* stackName)
 	sampgdk::logprintf(" --------- Stack Ends: %s ---------", stackName);
 }
 
+/**
+ * @brief Dump a Lua table's data into the console.
+ * 
+ * @param L - Lua state
+ * @param idx - index of stack which holds table
+ * @param level - how deep to look further
+ */
 void lua_dumptable(lua_State *L, int idx, int level)
 {
 	std::string levelTab;
@@ -57,7 +70,7 @@ void lua_dumptable(lua_State *L, int idx, int level)
 		//check if value is table
 		if (lua_istable(L, -2))
 		{
-			//make it beautifuly aligned
+			//make it beautifully aligned
 			sampgdk::logprintf("%s%s => Table\n%s{", levelTab.c_str(), lua_tostring(L, -1), levelTab.c_str());
 
 			//for some reason we need to pass the original table and not the referenced one (recursive call)
@@ -73,6 +86,14 @@ void lua_dumptable(lua_State *L, int idx, int level)
 	}
 }
 
+/**
+ * @brief Inserting to table with given key and value at idx of the stack
+ * 
+ * @param L - Lua state
+ * @param idx - index of stack which holds table
+ * @param key - self explanatory
+ * @param value - self explanatory
+ */
 void lua_inserttable(lua_State *L, int idx, const char* key, const char* value)
 {
 	assert(lua_istable(L, idx));
@@ -85,10 +106,11 @@ void lua_inserttable(lua_State *L, int idx, const char* key, const char* value)
 }
 
 /**
- * @brief 
+ * @brief Init elements storage unit and elements metatable for storing data.
  * 
  * @param L - Lua state
  */
+
 void lua_initclass(lua_State *L)
 {
 	lua_newtable(L);
@@ -98,6 +120,12 @@ void lua_initclass(lua_State *L)
 	lua_setfield(L, LUA_REGISTRYINDEX, "ge_mt"); //generic elements metatable
 }
 
+/**
+ * @brief Create a new class in Lua state with given name
+ * 
+ * @param L - Lua state
+ * @param className - Class name
+ */
 void lua_newclass(lua_State *L, const char* className)
 {
 	lua_getfield(L, LUA_REGISTRYINDEX, "ge_mt");
@@ -177,7 +205,11 @@ void lua_newclass(lua_State *L, const char* className)
 	lua_pushstring(L, className);
 }
 
-//void lua_registerclass(lua_State *L, const char* className)
+/**
+ * @brief Register set up class in registry. 
+ * 
+ * @param L - Lua state
+ */
 void lua_registerclass(lua_State *L)
 {
 	const char* className = luaL_checkstring(L, -1);
@@ -190,6 +222,13 @@ void lua_registerclass(lua_State *L)
 	lua_setglobal(L, className);
 }
 
+/**
+ * @brief Register C function with given function name in Lua state
+ * 
+ * @param L - Lua state
+ * @param functionName - Function name to register C function to.
+ * @param func - Actual C function
+ */
 void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction func)
 {
 	const char* className = luaL_checkstring(L, -1);
@@ -218,6 +257,13 @@ void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction 
 	}
 }
 
+/**
+ * @brief Register OOP functionality to already existing function name.
+ * 
+ * @param L - Lua state
+ * @param oopName - OOP name
+ * @param functionName - Already existing Lua function name.
+ */
 void lua_registeroop(lua_State *L, const char* oopName, const char* functionName)
 {
 	const char* className = luaL_checkstring(L, -1);
@@ -240,6 +286,14 @@ void lua_registeroop(lua_State *L, const char* oopName, const char* functionName
 	}
 }
 
+/**
+ * @brief Give variable functionality with setter and getter functions.
+ * 
+ * @param L - Lua state
+ * @param variableName - Variable name
+ * @param setFunction - Already existing set function
+ * @param getFunction - Already existing get function
+ */
 void lua_registervariable(lua_State *L, const char* variableName, const char* setFunction, const char* getFunction)
 {
 	const char* className = luaL_checkstring(L, -1);
@@ -271,6 +325,13 @@ void lua_registervariable(lua_State *L, const char* variableName, const char* se
 	}
 }
 
+/**
+ * @brief Get elements or elements metatable from registry and push to top of the stack
+ * 
+ * @param L - Lua state
+ * @param mt - Is it the metatable (true) or regular elements storage unit (false)
+ * @param className - Which class should retrieve
+ */
 void lua_getclass_helper(lua_State *L, bool mt, const char* className)
 {
 	//get metatables or storage unit (depending on "mt" variable) from lua registry

@@ -14,13 +14,14 @@ add_samp_plugin(samp-lua-plugin
 	CActor.cpp
 	CEntity.cpp
 	CEntityData.cpp
-	CLuaDefs.cpp
-	CLuaFunctionDefs.cpp
 	CObject.cpp
 	CPlayer.cpp
 	CVehicle.cpp
-	CModeInit.cpp
+	CLuaDefs.cpp
+	CLuaFunctionDefs.cpp
+	CLuaVehicleFuncDefs.cpp
 	CSAMP.cpp
+	CModeInit.cpp
 	Shared.cpp
 	Main.cpp
 	Main.def

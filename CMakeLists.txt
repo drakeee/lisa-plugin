@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.0)
-project(samp-lua-plugin VERSION 0.1.0)
+project(lisa VERSION 0.1.0)
 
 set(PLUGIN_VERSION "0.0.1")
 

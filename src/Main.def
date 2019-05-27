@@ -3,4 +3,4 @@ EXPORTS
 	Load
 	Unload
 	ProcessTick
-	OnGameModeInit
+	OnPublicCall

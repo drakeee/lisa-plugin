@@ -52,15 +52,55 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 
 	if(!strcmp(name, "OnPlayerSelectObject"))
 	{
-		sampgdk::logprintf("Selected");
+		sampgdk::logprintf("OnPlayerSelectObject");
 
-		sampgdk::logprintf("Param1: %d", params[1]);
-		sampgdk::logprintf("Param2: %d", params[2]);
-		sampgdk::logprintf("Param3: %d", params[3]);
-		sampgdk::logprintf("Param4: %d", params[4]);
-		sampgdk::logprintf("Param5: %d", params[5]);
-		sampgdk::logprintf("Param6: %d", params[6]);
-		sampgdk::logprintf("Param7: %d", params[7]);
+		for(int i = 0; i < params[0]/sizeof(cell); i++)
+		{
+			
+			//Check if we need to allocate memory for storing value
+			//NOTE: If addr is greater than 0 it means that its probably a string, otherwise it's float or number or bool
+			cell *addr;
+			amx_GetAddr(amx, params[i + 1], &addr);
+
+			if(addr > 0)
+			{
+				int stringLength = 0;
+				amx_StrLen(addr, &stringLength);
+
+				sampgdk::logprintf("Size: %d", stringLength);
+			}
+
+			sampgdk::logprintf("Param(%d): %d | addr: %d", i + 1, params[i + 1], addr);
+		}
+	}
+
+	if(!strcmp(name, "TestShit"))
+	{
+		sampgdk::logprintf("TestShit");
+
+		for(int i = 0; i < params[0]/sizeof(cell); i++)
+		{
+			cell *addr;
+			amx_GetAddr(amx, params[i + 1], &addr);
+
+			if(addr > 0)
+			{
+				int stringLength = 0;
+				amx_StrLen(addr, &stringLength);
+
+				stringLength++;
+
+				sampgdk::logprintf("Size: %d", stringLength);
+
+				char *temp_string = new char[stringLength];
+				amx_GetString(temp_string, addr, 0, stringLength);
+				sampgdk::logprintf("String: %s", temp_string);
+
+				delete[] temp_string;
+			}
+
+			sampgdk::logprintf("Param(%d): %d | addr: %d", i + 1, params[i + 1], addr);
+		}
 	}
 
 	return true;
@@ -87,6 +127,15 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 		sampgdk::logprintf("Found OnPlayerSelectObject");
 	}
 
+	index = 0;
+	if(!amx_FindPublic(a, "TestShit", &index))
+	{
+		cell addr;
+		amx_PushString(a, &addr, NULL, "Teszt shit happens", 0, 0);
+
+		amx_Exec(a, NULL, index);
+	}
+
 	//Create new Lua virtual machine
 	lua_State *L = luaL_newstate();
 
@@ -94,6 +143,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	luaL_openlibs(L);
 	lua_initclass(L);
 	
+	CVehicleFuncDefs::init(L);
 
 	//Try to load file for testing purposes
 	if(luaL_dofile(L, "./scripts/test.lua"))

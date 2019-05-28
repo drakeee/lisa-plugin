@@ -22,8 +22,10 @@
 #include <lua.hpp>
 
 #include "Shared.h"
+#include "CArgReader.h"
 #include "CLuaFunctionDefs.h"
 #include "CLuaDefs.h"
+#include "CLuaVehicleFuncDefs.h"
 #include "CEntityData.h"
 #include "CActor.h"
 #include "CObject.h"

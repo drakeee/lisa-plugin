@@ -25,7 +25,7 @@ void lua_initclass(lua_State *L);
 void lua_newclass(lua_State *L, const char* className = "");
 //void lua_registerclass(lua_State *L, const char* className);
 void lua_registerclass(lua_State *L);
-void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction func);
+void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction func, bool isGlobal = true);
 void lua_registeroop(lua_State *L, const char* oopName, const char* functionName);
 void lua_registervariable(lua_State *L, const char* variableName, const char* setFunction, const char* getFunction);
 void lua_getclass_helper(lua_State *L, bool mt, const char* className);

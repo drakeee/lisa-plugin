@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <sampgdk.h>
 
 #define COL_MKEK		"{1E90FF}"
 #define COL_SZURKE 		"{757167}"
@@ -40,6 +41,12 @@ struct Vector3
 	Vector3(const Vector4 &rhs);
 	Vector3(void) : x(0.0f), y(0.0f), z(0.0f) {};
 	Vector3(float x, float y, float z) : x(x), y(y), z(z) {};
+	Vector3(const Vector3 &rhs) : x(rhs.x), y(rhs.y), z(rhs.z) {};
+
+	~Vector3(void)
+	{
+		sampgdk::logprintf("Vector3 destructor");
+	}
 
 	Vector3& operator=(const Vector4 & other);
 };

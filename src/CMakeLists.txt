@@ -20,6 +20,7 @@ add_samp_plugin(lisa
 	CLuaDefs.cpp
 	CLuaFunctionDefs.cpp
 	CLuaVehicleFuncDefs.cpp
+	CLuaVector3FuncDefs.cpp
 	CSAMP.cpp
 	CModeInit.cpp
 	Shared.cpp

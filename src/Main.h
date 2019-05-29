@@ -25,6 +25,7 @@
 #include "CArgReader.h"
 #include "CLuaFunctionDefs.h"
 #include "CLuaDefs.h"
+#include "CLuaVector3FuncDefs.h"
 #include "CLuaVehicleFuncDefs.h"
 #include "CEntityData.h"
 #include "CActor.h"

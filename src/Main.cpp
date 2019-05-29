@@ -143,6 +143,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	luaL_openlibs(L);
 	lua_initclass(L);
 	
+	CVector3Defs::init(L);
 	CVehicleFuncDefs::init(L);
 
 	//Try to load file for testing purposes

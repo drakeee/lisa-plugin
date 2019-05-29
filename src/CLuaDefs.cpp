@@ -229,7 +229,7 @@ void lua_registerclass(lua_State *L)
  * @param functionName - Function name to register C function to.
  * @param func - Actual C function
  */
-void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction func)
+void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction func, bool isGlobal)
 {
 	const char* className = luaL_checkstring(L, -1);
 	
@@ -247,8 +247,11 @@ void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction 
 		lua_pushcfunction(L, func);
 		lua_rawset(L, -3);
 
-		lua_getfield(L, -1, functionName);
-		lua_setglobal(L, functionName);
+		if(isGlobal)
+		{
+			lua_getfield(L, -1, functionName);
+			lua_setglobal(L, functionName);
+		}
 
 		//stack: ge.class table, ge.class["__function"] table
 		lua_pop(L, 1); //after pop: ge.class table

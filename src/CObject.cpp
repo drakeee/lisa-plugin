@@ -2,11 +2,7 @@
 #include "CPlayer.h"
 #include "CSAMP.h"
 
-#ifdef SAMPGDK_AMALGAMATION
-	#include <sampgdk.h>
-#else
-	#include <sampgdk/a_objects.h>
-#endif
+#include <sampgdk.h>
 
 CObject::CObject(int modelid, float X, float Y, float Z, float rX, float rY, float rZ, float DrawDistance)
 {

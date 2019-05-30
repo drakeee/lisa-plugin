@@ -3,11 +3,7 @@
 #include "CEntity.h"
 #include "Shared.h"
 
-#ifdef SAMPGDK_AMALGAMATION
-	#include <sampgdk.h>
-#else
-	#include <sampgdk/a_vehicles.h>
-#endif
+#include <sampgdk.h>
 
 #include <vector>
 #include <string>

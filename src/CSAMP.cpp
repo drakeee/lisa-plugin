@@ -4,12 +4,7 @@
 
 //#include "CParamsParser.h"
 
-#ifdef SAMPGDK_AMALGAMATION
-	#include <sampgdk.h>
-#else
-	#include <sampgdk/a_samp.h>
-	#include <sampgdk/a_vehicles.h>
-#endif
+#include <sampgdk.h>
 
 CSAMP *g_Core = CSAMP::getInstance();
 CSAMP* CSAMP::m_pInstance = NULL;

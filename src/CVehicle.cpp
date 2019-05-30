@@ -1,12 +1,7 @@
 #include "CVehicle.h"
 #include "CSAMP.h"
 
-#ifdef SAMPGDK_AMALGAMATION
 #include <sampgdk.h>
-#else
-#include <sampgdk/a_samp.h>
-#include <sampgdk/a_vehicles.h>
-#endif
 
 CVehicle::CVehicle(int vehicleid)
 	: vehicleid(vehicleid)

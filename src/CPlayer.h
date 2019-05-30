@@ -3,12 +3,7 @@
 #include "CEntity.h"
 #include "Shared.h"
 
-#ifdef SAMPGDK_AMALGAMATION
-	#include <sampgdk.h>
-#else
-	#include <sampgdk/a_players.h>
-	#include <sampgdk/a_samp.h>
-#endif
+#include <sampgdk.h>
 
 #include <string>
 #include <functional>

@@ -3,11 +3,7 @@
 #include "Shared.h"
 #include "CPlayer.h"
 
-#ifdef SAMPGDK_AMALGAMATION
-	#include <sampgdk.h>
-#else
-	#include <sampgdk/a_objects.h>
-#endif
+#include <sampgdk.h>
 
 class CObject : public CEntity
 {

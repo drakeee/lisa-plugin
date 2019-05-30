@@ -9,4 +9,5 @@ public:
 	static void initClass(lua_State *L);
 	static void initVariables(lua_State *L);
 	static int create(lua_State *L);
+	static int destroy(lua_State *L);
 };

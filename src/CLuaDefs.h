@@ -23,6 +23,7 @@ void lua_inserttable(lua_State *L, int idx, const char* key, const char* value);
 
 void lua_initclass(lua_State *L);
 void lua_newclass(lua_State *L, const char* className = "");
+void lua_classmetatable(lua_State *L, const char* metaName, lua_CFunction func);
 //void lua_registerclass(lua_State *L, const char* className);
 void lua_registerclass(lua_State *L);
 void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction func, bool isGlobal = true);

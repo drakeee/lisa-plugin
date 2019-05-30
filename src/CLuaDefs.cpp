@@ -206,6 +206,27 @@ void lua_newclass(lua_State *L, const char* className)
 }
 
 /**
+ * @brief Register a meta function in class metatable
+ * 
+ * @param L - Lua state
+ * @param metaName - Meta nem i.e: __gc, __add, __mul, etc
+ * @param func - C function to handle data
+ */
+void lua_classmetatable(lua_State *L, const char* metaName, lua_CFunction func)
+{
+	const char* className = luaL_checkstring(L, -1);
+	lua_getclassmt(L, className);
+
+	if(func)
+	{
+		lua_pushcfunction(L, func);
+		lua_setfield(L, -2, metaName);
+
+		lua_pop(L, 1);
+	}
+}
+
+/**
  * @brief Register set up class in registry. 
  * 
  * @param L - Lua state

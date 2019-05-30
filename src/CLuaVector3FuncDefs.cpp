@@ -10,7 +10,9 @@ void CVector3Defs::initClass(lua_State *L)
 {
 	lua_newclass(L, "Vector3");
 
-	lua_registerfunction(L, "new", CVector3Defs::create);
+	lua_classmetatable(L, "__gc", CVector3Defs::destroy);
+
+	lua_registerfunction(L, "new", CVector3Defs::create, false);
 
 	lua_registerclass(L);
 }
@@ -97,5 +99,24 @@ int CVector3Defs::create(lua_State *L)
 
 	//lua_stacktrace(L, "Vector32");
 
-	return 0;
+	return 1;
+}
+
+int CVector3Defs::destroy(lua_State *L)
+{
+	Vector3 *vector = nullptr;
+
+	CArgReader argReader(L);
+	argReader.ReadUserData(vector);
+
+	if(!argReader.HasAnyError())
+	{
+		delete vector;
+
+		lua_pushboolean(L, true);
+		return 1;
+	}
+
+	lua_pushboolean(L, false);
+	return 1;
 }

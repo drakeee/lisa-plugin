@@ -30,7 +30,7 @@ public:
 	}
 
 	template <typename T>
-	void ReadNumber(T &number, T defaultValue = 0)
+	void ReadNumber(T &number, T defaultValue = 0, bool useDefaultValue = true)
 	{
 		//check if argument is number
 		int argType = lua_type(m_luaVM, m_stackIndex);
@@ -49,13 +49,14 @@ public:
 			return;
 		}
 
-		AddErrorMessage("number");
+		if(!useDefaultValue)
+			AddErrorMessage("number");
 
 		number = defaultValue;
 		m_stackIndex++;
 	}
 
-	void ReadString(std::string &stringValue, const char* defaultValue = NULL)
+	void ReadString(std::string &stringValue, const char* defaultValue = NULL, bool useDefaultValue = true)
 	{
 		//check if argument is string
 		int argType = lua_type(m_luaVM, m_stackIndex);
@@ -73,11 +74,14 @@ public:
 			return;
 		}
 
-		AddErrorMessage("string");
+		if(!useDefaultValue)
+			AddErrorMessage("string");
 
 		stringValue.append(defaultValue);
 		m_stackIndex++;
 	}
+
+	#define TEST(x) #x
 
 	template <typename T>
 	void ReadUserData(T* &userdata)
@@ -96,7 +100,8 @@ public:
 			return;
 		}
 
-		AddErrorMessage("userdata");
+		//if(!useDefaultValue)
+		AddErrorMessage(TEST(T));
 
 		userdata = nullptr;
 		m_stackIndex++;
@@ -104,7 +109,7 @@ public:
 		return;
 	}
 
-	void ReadVector3D(Vector3 &number, Vector3 defaultValue = Vector3(0.0f, 0.0f, 0.0f))
+	void ReadVector3D(Vector3 &number, Vector3 defaultValue = Vector3(0.0f, 0.0f, 0.0f), bool useDefaultValue = true)
 	{
 		//check if argument is number
 		int argType = lua_type(m_luaVM, m_stackIndex);
@@ -126,16 +131,28 @@ public:
 
 			return;
 		}
+		else if(argType == LUA_TUSERDATA)
+		{
+			Vector3 *tempVector = nullptr;
+			ReadUserData(tempVector);
+
+			if(tempVector)
+			{
+				number = *tempVector;
+				return;
+			}
+		}
 
 		//TODO: Handle Vector3 object
 
-		AddErrorMessage("vector3");
+		if(!useDefaultValue)
+			AddErrorMessage("vector3");
 
 		number = defaultValue;
 		m_stackIndex += 3; //Skip 3 values because of Vector
 	}
 
-	void ReadVector4D(Vector4 &number, Vector4 defaultValue = Vector4(0.0f, 0.0f, 0.0f, 0.0f))
+	void ReadVector4D(Vector4 &number, Vector4 defaultValue = Vector4(0.0f, 0.0f, 0.0f, 0.0f), bool useDefaultValue = true)
 	{
 		//check if argument is number
 		int argType = lua_type(m_luaVM, m_stackIndex);
@@ -161,7 +178,8 @@ public:
 
 		//TODO: Handle Vector4 object
 
-		AddErrorMessage("vector4");
+		if(!useDefaultValue)
+			AddErrorMessage("vector4");
 
 		number = defaultValue;
 		m_stackIndex += 4; //Skip 4 values because of Vector

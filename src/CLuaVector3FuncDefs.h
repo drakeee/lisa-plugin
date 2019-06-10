@@ -10,4 +10,5 @@ public:
 	static void initVariables(lua_State *L);
 	static int create(lua_State *L);
 	static int destroy(lua_State *L);
+	static int tostring(lua_State *L);
 };

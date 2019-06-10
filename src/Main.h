@@ -1,7 +1,7 @@
 //Define plugin details
-#define PLUGIN_NAME "Lua plugin"
+#define PLUGIN_NAME "Lisa"
 #define PLUGIN_AUTHOR "drake"
-#define PLUGIN_VERSION "0.0.1"
+#define PLUGIN_VERSION "0.0.2"
 
 //Standard includes
 #include <iostream>

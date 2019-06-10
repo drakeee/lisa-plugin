@@ -64,12 +64,13 @@ public:
 	//inline int create(int vehicletype, float x, float y, float z, float rotation, int color1, int color2, int respawn_delay, bool addsiren = false) { return true; }
 	//inline bool destroy(int vehicleid) { return DestroyVehicle(this->vehicleid); } 
 	inline bool isStreamedIn(int forplayerid) { return IsVehicleStreamedIn(this->vehicleid, forplayerid); } 
-	inline Vector4 getPos(void) { Vector4 tempVector; GetVehiclePos(this->vehicleid, &tempVector.x, &tempVector.y, &tempVector.z); GetVehicleZAngle(this->vehicleid, &tempVector.w); return tempVector; }
+	//inline Vector4 getPos(void) { Vector4 tempVector; GetVehiclePos(this->vehicleid, &tempVector.x, &tempVector.y, &tempVector.z); GetVehicleZAngle(this->vehicleid, &tempVector.w); return tempVector; }
+	inline Vector3 getPos(void) { Vector3 tempVector; GetVehiclePos(this->vehicleid, &tempVector.x, &tempVector.y, &tempVector.z); return tempVector; }
 	inline bool setPos(float x, float y, float z) { return SetVehiclePos(this->vehicleid, x, y, z); } 
 	inline bool setPos(float x, float y, float z, float rotation) { return SetVehiclePos(this->vehicleid, x, y, z); SetVehicleZAngle(this->vehicleid, rotation); }
 	inline bool setPos(Vector3 &position) { return SetVehiclePos(this->vehicleid, position.x, position.y, position.z); }
 	inline bool setPos(Vector4 &position) { return SetVehiclePos(this->vehicleid, position.x, position.y, position.z); SetVehicleZAngle(this->vehicleid, position.w); }
-	inline float getZAngle(int vehicleid) { float z_angle; GetVehicleZAngle(this->vehicleid, &z_angle); return z_angle; }
+	inline float getZAngle(void) { float z_angle; GetVehicleZAngle(this->vehicleid, &z_angle); return z_angle; }
 	inline Vector4 getRotationQuat(int vehicleid) { Vector4 tempVector; GetVehicleRotationQuat(this->vehicleid, &tempVector.w, &tempVector.x, &tempVector.y, &tempVector.z); return tempVector; }
 	inline bool setZAngle(float z_angle) { return SetVehicleZAngle(this->vehicleid, z_angle); } 
 	inline bool setParamsForPlayer(int playerid, int objective, int doorslocked) { return SetVehicleParamsForPlayer(this->vehicleid, playerid, objective, doorslocked); } 

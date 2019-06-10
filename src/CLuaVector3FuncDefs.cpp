@@ -11,6 +11,7 @@ void CVector3Defs::initClass(lua_State *L)
 	lua_newclass(L, "Vector3");
 
 	lua_classmetatable(L, "__gc", CVector3Defs::destroy);
+	lua_classmetatable(L, "__tostring", CVector3Defs::tostring);
 
 	lua_registerfunction(L, "new", CVector3Defs::create, false);
 
@@ -118,5 +119,28 @@ int CVector3Defs::destroy(lua_State *L)
 	}
 
 	lua_pushboolean(L, false);
+	return 1;
+}
+
+int CVector3Defs::tostring(lua_State *L)
+{
+	Vector3 *vector = nullptr;
+	//Vector3 vector;
+
+	CArgReader argReader(L);
+	argReader.ReadUserData(vector);
+	//argReader.ReadVector3D(vector);
+
+	if (argReader.HasAnyError())
+	{
+		argReader.GetErrorMessages();
+		return 0;
+	}
+
+	char buffer[128];
+	sprintf(buffer, "Vector3(%.3f, %.3f, %.3f)", vector->x, vector->y, vector->z);
+
+	lua_pushstring(L, buffer);
+
 	return 1;
 }

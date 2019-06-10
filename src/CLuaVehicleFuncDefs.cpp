@@ -15,12 +15,17 @@ void CVehicleFuncDefs::initClass(lua_State *L)
 	lua_registerfunction(L, "createVehicle", CVehicleFuncDefs::createVehicle);
 	lua_registerfunction(L, "setVehiclePosition", CVehicleFuncDefs::setVehiclePosition);
 	lua_registerfunction(L, "getVehiclePosition", CVehicleFuncDefs::getVehiclePosition);
+	lua_registerfunction(L, "setVehicleRotation", CVehicleFuncDefs::setVehicleRotation);
+	lua_registerfunction(L, "getVehicleRotation", CVehicleFuncDefs::getVehicleRotation);
 
 	lua_registeroop(L, "new", "createVehicle");
 	lua_registeroop(L, "setPosition", "setVehiclePosition");
 	lua_registeroop(L, "getPosition", "getVehiclePosition");
+	lua_registeroop(L, "setRotation", "setVehicleRotation");
+	lua_registeroop(L, "getRotation", "getVehicleRotation");
 
 	lua_registervariable(L, "position", "setVehiclePosition", "getVehiclePosition");
+	lua_registervariable(L, "rotation", "setVehicleRotation", "getVehicleRotation");
 
 	lua_registerclass(L);
 }
@@ -64,13 +69,16 @@ int CVehicleFuncDefs::createVehicle(lua_State *L)
 int CVehicleFuncDefs::setVehiclePosition(lua_State *L)
 {
 	CVehicle *vehicle;
-	float x, y, z;
+	Vector3 position;
+	//float x, y, z;
 
 	CArgReader argReader(L);
 	argReader.ReadUserData(vehicle);
-	argReader.ReadNumber(x);
-	argReader.ReadNumber(y);
-	argReader.ReadNumber(z);
+	argReader.ReadVector3D(position);
+	
+	//argReader.ReadNumber(x);
+	//argReader.ReadNumber(y);
+	//argReader.ReadNumber(z);
 
 	if (argReader.HasAnyError())
 	{
@@ -80,16 +88,15 @@ int CVehicleFuncDefs::setVehiclePosition(lua_State *L)
 
 	lua_pushboolean(L, 1);
 
-	vehicle->setPos(x, y, z);
+	vehicle->setPos(position.x, position.y, position.z);
 
-	lua_stacktrace(L, "setVehiclePosition");
 	return 1;
 }
 
 int CVehicleFuncDefs::getVehiclePosition(lua_State *L)
 {
-
 	CVehicle *vehicle;
+	//Vector3 position;
 
 	CArgReader argReader(L);
 	argReader.ReadUserData(vehicle);
@@ -100,29 +107,60 @@ int CVehicleFuncDefs::getVehiclePosition(lua_State *L)
 		return 0;
 	}
 
-	Vector4 vehiclePosition = vehicle->getPos();
-	//sampgdk::InvokeNativeArray()
-	int vehicleid = vehicle->getVehicleID();
-	float x, y, z;
-	void *haha[4];
-	haha[0] = &vehicleid;
-	haha[1] = &x;
-	haha[2] = &y;
-	haha[3] = &z;
-	void *somepointer = &haha;
-	AMX_NATIVE someNativeFunction = sampgdk::FindNative("getVehiclePos");
-	sampgdk::logprintf("someNativeFunction: %d", someNativeFunction);
-	sampgdk::InvokeNativeArray(someNativeFunction, "dRRR", haha);
-
-	sampgdk::logprintf("Haha: %f %f %f", x, y, z);
-
-	lua_pushnumber(L, static_cast<lua_Number>(vehiclePosition.x));
-	lua_pushnumber(L, static_cast<lua_Number>(vehiclePosition.y));
-	lua_pushnumber(L, static_cast<lua_Number>(vehiclePosition.z));
-	lua_pushnumber(L, static_cast<lua_Number>(vehiclePosition.w));
+	Vector3 vehiclePosition = vehicle->getPos();
+	lua_userdata(L, "Vector3", new Vector3(vehiclePosition));
 
 	lua_stacktrace(L, "getVehiclePosition");
-	return 4;
+	return 1;
+}
+
+int CVehicleFuncDefs::setVehicleRotation(lua_State *L)
+{
+	CVehicle *vehicle;
+	float rotation;
+
+	CArgReader argReader(L);
+	argReader.ReadUserData(vehicle);
+	argReader.ReadNumber(rotation);
+
+	if (argReader.HasAnyError())
+	{
+		argReader.GetErrorMessages();
+		return 0;
+	}
+
+	lua_stacktrace(L, "setVehicleRotation");
+	sampgdk::logprintf("ZAngle: %.4f", rotation);
+
+	bool asd = vehicle->setZAngle(rotation);
+	sampgdk::logprintf("ZAngle set: %d | %.4f", asd, vehicle->getZAngle());
+
+	lua_pushboolean(L, 1);
+
+	return 1;
+}
+
+int CVehicleFuncDefs::getVehicleRotation(lua_State *L)
+{
+	CVehicle *vehicle;
+	//Vector3 position;
+
+	CArgReader argReader(L);
+	argReader.ReadUserData(vehicle);
+
+	if (argReader.HasAnyError())
+	{
+		argReader.GetErrorMessages();
+		return 0;
+	}
+
+	//Vector3 vehiclePosition = vehicle->getPos();
+	//lua_userdata(L, "Vector3", new Vector3(vehiclePosition));
+	sampgdk::logprintf("ZAngle get: %.4f", vehicle->getZAngle());
+	lua_pushnumber(L, vehicle->getZAngle());
+
+	lua_stacktrace(L, "getVehicleRotation");
+	return 1;
 }
 
 void CVehicleFuncDefs::initVariables(lua_State *L)

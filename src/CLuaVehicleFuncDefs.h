@@ -11,4 +11,6 @@ public:
 	static int createVehicle(lua_State *L);
 	static int setVehiclePosition(lua_State *L);
 	static int getVehiclePosition(lua_State *L);
+	static int setVehicleRotation(lua_State *L);
+	static int getVehicleRotation(lua_State *L);
 };

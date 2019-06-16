@@ -88,15 +88,18 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 				int stringLength = 0;
 				amx_StrLen(addr, &stringLength);
 
-				stringLength++;
+				if(stringLength > 1)
+				{
+					stringLength++;
 
-				sampgdk::logprintf("Size: %d", stringLength);
+					sampgdk::logprintf("Size: %d", stringLength);
 
-				char *temp_string = new char[stringLength];
-				amx_GetString(temp_string, addr, 0, stringLength);
-				sampgdk::logprintf("String: %s", temp_string);
+					char *temp_string = new char[stringLength];
+					amx_GetString(temp_string, addr, 0, stringLength);
+					sampgdk::logprintf("String: %s", temp_string);
 
-				delete[] temp_string;
+					delete[] temp_string;
+				}
 			}
 
 			sampgdk::logprintf("Param(%d): %d | addr: %d", i + 1, params[i + 1], addr);
@@ -106,6 +109,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnPublicCall(AMX *amx, const char *name, cell *pa
 	return true;
 }
 
+lua_State *L = nullptr;
 PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 {
 	sampgdk::logprintf("OnGameModeInit invoked.");
@@ -131,13 +135,17 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 	if(!amx_FindPublic(a, "TestShit", &index))
 	{
 		cell addr;
-		amx_PushString(a, &addr, NULL, "Teszt shit happens", 0, 0);
+		amx_PushString(a, &addr, NULL, "", 0, 0);
+
+		//int teszt[6] = {0, 1, 2, 3, 4, 5};
+		//amx_PushArray(a, &addr, NULL, teszt, 6);
 
 		amx_Exec(a, NULL, index);
 	}
 
 	//Create new Lua virtual machine
-	lua_State *L = luaL_newstate();
+	if(L == nullptr)
+		L = luaL_newstate();
 
 	//Import default libraries into the vm
 	luaL_openlibs(L);
@@ -160,6 +168,9 @@ PLUGIN_EXPORT bool PLUGIN_CALL OnGameModeInit()
 		lua_close(L);
 		L = nullptr;
 	}
+
+	lua_gc(L, LUA_GCCOLLECT, 0);
+	//lua_close(L);
 
 	return true;
 }

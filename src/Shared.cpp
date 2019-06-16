@@ -5,6 +5,8 @@ Vector3::Vector3(const Vector4 &rhs)
 	x = rhs.x;
 	y = rhs.y;
 	z = rhs.z;
+
+	/* sampgdk::logprintf("Vector3(c1): %f | %f | %f", x, y, z); */
 }
 
 Vector3& Vector3::operator=(const Vector4 & other)

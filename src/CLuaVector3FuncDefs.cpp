@@ -25,7 +25,7 @@ void CVector3Defs::initVariables(lua_State *L)
 
 int CVector3Defs::create(lua_State *L)
 {
-	Vector3 vector;
+	Vector3 vector(0.1, 0.2, 0.3);
 
 	CArgReader argReader(L);
 	if(argReader.IsCurrentType(LUA_TTABLE))
@@ -93,7 +93,6 @@ int CVector3Defs::create(lua_State *L)
 	sampgdk::logprintf("Vector3: x = %f, y = %f, z = %f", vector.x, vector.y, vector.z);
 
 	Vector3 *tempVector = new Vector3(vector);
-	//auto tempVector = std::make_unique<Vector3>(vector);
 
 	sampgdk::logprintf("Vector3(2): x = %f, y = %f, z = %f", tempVector->x, tempVector->y, tempVector->z);
 	lua_userdata(L, "Vector3", tempVector);
@@ -107,6 +106,8 @@ int CVector3Defs::destroy(lua_State *L)
 {
 	Vector3 *vector = nullptr;
 
+	lua_stacktrace(L, "destroy");
+
 	CArgReader argReader(L);
 	argReader.ReadUserData(vector);
 
@@ -114,9 +115,14 @@ int CVector3Defs::destroy(lua_State *L)
 	{
 		delete vector;
 
+		sampgdk::logprintf("Vector garbage collected!");
+
 		lua_pushboolean(L, true);
 		return 1;
 	}
+
+	argReader.GetErrorMessages();
+	sampgdk::logprintf("Vector failed to destroyed");
 
 	lua_pushboolean(L, false);
 	return 1;

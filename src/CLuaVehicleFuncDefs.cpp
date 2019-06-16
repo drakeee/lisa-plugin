@@ -12,6 +12,8 @@ void CVehicleFuncDefs::initClass(lua_State *L)
 {
 	lua_newclass(L, "Vehicle");
 
+	lua_classmetatable(L, "__gc", CVehicleFuncDefs::destroy);
+
 	lua_registerfunction(L, "createVehicle", CVehicleFuncDefs::createVehicle);
 	lua_registerfunction(L, "setVehiclePosition", CVehicleFuncDefs::setVehiclePosition);
 	lua_registerfunction(L, "getVehiclePosition", CVehicleFuncDefs::getVehiclePosition);
@@ -28,6 +30,31 @@ void CVehicleFuncDefs::initClass(lua_State *L)
 	lua_registervariable(L, "rotation", "setVehicleRotation", "getVehicleRotation");
 
 	lua_registerclass(L);
+}
+
+int CVehicleFuncDefs::destroy(lua_State *L)
+{
+	CVehicle *vehicle = nullptr;
+
+	CArgReader argReader(L);
+	argReader.ReadUserData(vehicle);
+
+	//Check if we have any issue related to argument read
+	if(!argReader.HasAnyError())
+	{
+		sampgdk::logprintf("Destroying vehicle");
+
+		lua_pushboolean(L, 1);
+		return 1;
+	}
+
+	//Probably there is an error message for us
+	argReader.GetErrorMessages();
+
+	//Push false because we ran into a problem
+	lua_pushboolean(L, 0);
+
+	return 1;
 }
 
 int CVehicleFuncDefs::createVehicle(lua_State *L)
@@ -58,6 +85,7 @@ int CVehicleFuncDefs::createVehicle(lua_State *L)
 		-1);
 	
 	lua_userdata(L, vehicle->getEntityTypeName(), vehicle);
+
 	//CVehicle **vehicle = reinterpret_cast<CVehicle **>(lua_newuserdata(L, sizeof(CVehicle*)));
 
 	//CVehicle *vehicle = new CVehicle(modelid, x, y, z, rotation, color1, color2);

@@ -39,13 +39,26 @@ struct Vector3
 	float z;
 
 	Vector3(const Vector4 &rhs);
-	Vector3(void) : x(0.0f), y(0.0f), z(0.0f) {};
-	Vector3(float x, float y, float z) : x(x), y(y), z(z) {};
-	Vector3(const Vector3 &rhs) : x(rhs.x), y(rhs.y), z(rhs.z) {};
+	Vector3(void) : x(0.0f), y(0.0f), z(0.0f) { /* sampgdk::logprintf("Vector3(c2): %f | %f | %f", x, y, z); */ };
+	Vector3(float x, float y, float z) : x(x), y(y), z(z) { /* sampgdk::logprintf("Vector3(c3): %f | %f | %f", x, y, z); */ };
+	Vector3(const Vector3 &rhs) : x(rhs.x), y(rhs.y), z(rhs.z) { /* sampgdk::logprintf("Vector3(c4): %f | %f | %f", x, y, z); */ };
+
+	void *operator new(size_t size) 
+	{
+		sampgdk::logprintf("new operator overloaded");
+		void *p = malloc(size);
+		return p;
+	}
+
+	void operator delete(void *ptr) 
+	{ 
+		sampgdk::logprintf("delete operator overloaded");
+		free(ptr);
+	}
 
 	~Vector3(void)
 	{
-		sampgdk::logprintf("Vector3 destructor");
+		sampgdk::logprintf("Vector3 destructor: %f | %f | %f", this->x, this->y, this->z);
 	}
 
 	Vector3& operator=(const Vector4 & other);

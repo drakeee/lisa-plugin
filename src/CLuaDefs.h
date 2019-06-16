@@ -39,6 +39,10 @@ T* lua_userdata(lua_State *L, const char* className, T* userdata)
 	T **tempUserdata = reinterpret_cast<T **>(lua_newuserdata(L, sizeof(T*)));
 	*tempUserdata = userdata;
 
+	//Experimental stuff
+	//void *tempUserdata = lua_newuserdata(L, sizeof(T*));
+	//new(tempUserdata) std::unique_ptr<T>(userdata);
+
 	lua_getclassmt(L, className);
 	lua_setmetatable(L, -2);
 

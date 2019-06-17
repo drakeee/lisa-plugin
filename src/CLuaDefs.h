@@ -30,6 +30,7 @@ void lua_registerfunction(lua_State *L, const char* functionName, lua_CFunction 
 void lua_registeroop(lua_State *L, const char* oopName, const char* functionName);
 void lua_registervariable(lua_State *L, const char* variableName, const char* setFunction, const char* getFunction);
 void lua_getclass_helper(lua_State *L, bool mt, const char* className);
+bool lua_isudataexists(lua_State *L, void* udataPointer);
 //void lua_getclass(lua_State *L, const char* className);
 //void lua_getclassmt(lua_State *L, const char* className);
 

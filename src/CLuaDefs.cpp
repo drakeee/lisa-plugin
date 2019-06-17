@@ -383,6 +383,18 @@ void lua_getclass_helper(lua_State *L, bool mt, const char* className)
 	lua_remove(L, -2); //class table
 }
 
+/**
+ * @brief Check if the given userdata pointer exists in Lua registry
+ * 
+ * @param L - Lua state
+ * @param udataPointer - Userdata pointer
+ */
+bool lua_isudataexists(lua_State *L, void* udataPointer)
+{
+	lua_getfield(L, LUA_REGISTRYINDEX, "ge");
+	return true;
+}
+
 /*void lua_getclass(lua_State *L, const char* className)
 {
 	lua_getfield(L, LUA_REGISTRYINDEX, "ge");
